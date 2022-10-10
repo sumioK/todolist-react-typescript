@@ -5,6 +5,11 @@ import './App.css';
 function App() {
 
 
+//useStateにも型を指定できる
+const [inputValue, setInputValue] = useState("");
+const [todos, setTodos] =useState<Todo[]>([]);
+
+
   type Todo = {
     inputValue: string;
     id: number;
@@ -51,9 +56,12 @@ function App() {
     });
     setTodos(newTodos);
   }
-//useStateにも型を指定できる
-  const [inputValue, setInputValue] = useState("");
-  const [todos, setTodos] =useState<Todo[]>([]);
+
+  const handleDelete = (id: number) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
+
 
 
   return (
@@ -79,6 +87,7 @@ function App() {
               onChange={(e) => handleChecked(todo.id, todo.checked)}
               className="inputText" 
               />
+              <button onClick={() => handleDelete(todo.id)}>消</button>
             </li>
           ))}
         </ul>
